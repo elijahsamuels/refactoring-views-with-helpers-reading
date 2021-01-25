@@ -14,8 +14,8 @@ follow along and try out the code yourself.
 
 We've already added the presentation logic to show a blog post:
 
-```erb
-<!-- app/views/posts/show.html.erb -->
+```ruby
+# <!-- app/views/posts/show.html.erb -->
 
 <h1><%= @post.title %></h1>
 <p><%= @post.description %></p>
@@ -27,8 +27,8 @@ Fair enough.
 We know our `Post` model has a timestamp field called `updated_at`, so we decide
 to display that.
 
-```erb
-<!-- app/views/posts/show.html.erb -->
+```ruby
+# <!-- app/views/posts/show.html.erb -->
 
 <h1><%= @post.title %></h1>
 <p>Last updated: <%= @post.updated_at %></p>
@@ -46,8 +46,8 @@ Okay, armed with `strftime` and having read the ancient runes that help us
 understand the different format directives (e.g. `%A`, `%p`, etc.), we end up
 with this:
 
-```erb
-<!-- app/views/posts/show.html.erb -->
+```ruby
+# <!-- app/views/posts/show.html.erb -->
 
 <h1><%= @post.title %></h1>
 <p><%= @post.updated_at.strftime("Last updated %A, %b %e, at %l:%M %p") %></p>
@@ -67,8 +67,8 @@ Except they only know it on the `show` template. What if they also need to see
 that date on the post list page, in line with each post title? We can add it to
 the `index` template. Simple enough, right?
 
-```erb
-<!-- app/views/posts/index.html.erb -->
+```ruby
+# <!-- app/views/posts/index.html.erb -->
 
 <% @posts.each do |post| %>
   <div>
@@ -81,8 +81,8 @@ Done and done. Now it's on the `show` and `index` views. But now we're thinking
 that it would be nice to see this when we are editing a blog post, just for our
 reference. Okay, we can do that. Let's add it to the `edit` template.
 
-```erb
-<!-- app/views/posts/edit.html.erb -->
+```ruby
+# <!-- app/views/posts/edit.html.erb -->
 
 <%= form_for(@post) do |f| %>
   <label><%= @post.updated_at.strftime("Last updated %A, %b %e, at %l:%M %p") %></label><br>
@@ -190,16 +190,16 @@ the view template handle that part. It's not this helper's _concern_.
 
 Now that we have our helper, let's DRY up those views.
 
-```erb
-<!-- app/views/posts/show.html.erb -->
+```ruby
+# <!-- app/views/posts/show.html.erb -->
 
 <h1><%= @post.title %></h1>
 <p><%= last_updated @post %></p>
 <p><%= @post.description %></p>
 ```
 
-```erb
-<!-- app/views/posts/index.html.erb -->
+```ruby
+# <!-- app/views/posts/index.html.erb -->
 
 <% @posts.each do |post| %>
   <div>
@@ -208,8 +208,8 @@ Now that we have our helper, let's DRY up those views.
 <% end %>
 ```
 
-```erb
-<!-- app/views/posts/edit.html.erb -->
+```ruby
+# <!-- app/views/posts/edit.html.erb -->
 
 <%= form_for(@post) do |f| %>
   <label><%= last_updated @post %></label><br>
@@ -232,8 +232,8 @@ Our blog also has an author page that lists the posts by that author. What do we
 do if we want to also show the last updated time on that page? The answer is:
 the same thing we just did!
 
-```erb
-<!-- app/views/authors/show.html.erb -->
+```ruby
+# <!-- app/views/authors/show.html.erb -->
 
 <h1><%= @author.name %></h1>
 <p>Posts:</p>
@@ -285,8 +285,8 @@ end
 helpers on helpers! What this will do is send our `text` to the place in our
 application layout that is expecting some content for the `:title`.
 
-```erb
-<!-- app/views/layouts/application.html.erb -->
+```ruby
+# <!-- app/views/layouts/application.html.erb -->
 
 <head>
   <title><%= yield :title %></title>
@@ -299,8 +299,8 @@ RailsGuide.
 Now that we have our `title` helper, we can use it everywhere to change the page
 title based on the content.
 
-```erb
-<!-- app/views/authors/show.html.erb -->
+```ruby
+# <!-- app/views/authors/show.html.erb -->
 
 <% title @author.name %>
 
@@ -311,8 +311,8 @@ title based on the content.
 <% end %>
 ```
 
-```erb
-<!-- app/views/posts/show.html.erb -->
+```ruby
+# <!-- app/views/posts/show.html.erb -->
 
 <% title @post.title %>
 
